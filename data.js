@@ -1,7 +1,8 @@
-// Real Estate Website — Property Data
-// Managed client-side as JSON objects per project scope (no backend/database required for demo)
+// Real Estate Website — Seed Property Data
+// Used only to seed shared storage the very first time the site runs.
+// After that, the owner dashboard (admin.html) is the source of truth.
 
-const PROPERTIES = [
+const SEED_PROPERTIES = [
   {
     id: "P001",
     type: "2BHK",

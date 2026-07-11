@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Owner Panel — Marine & Metro Realty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;600;700&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .admin-tabs{ display:flex; gap:10px; margin-bottom:30px; flex-wrap:wrap; }
+  .admin-tab{
+    padding:10px 20px; border-radius:20px; border:1px solid var(--teal-deep); background:none;
+    font-family:var(--mono); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--teal-deep); cursor:pointer;
+  }
+  .admin-tab.active{ background:var(--teal-deep); color:var(--ivory); }
+  .admin-panel{ display:none; }
+  .admin-panel.active{ display:block; }
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; }
+  @media (max-width:700px){ .grid-2, .grid-3{ grid-template-columns:1fr; } }
+  .photo-preview{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+  .photo-preview img{ width:80px; height:60px; object-fit:cover; border-radius:4px; border:1px solid var(--line); }
+  .admin-table{ width:100%; border-collapse:collapse; background:var(--ivory); }
+  .admin-table th, .admin-table td{ padding:12px 14px; border-bottom:1px solid var(--line); text-align:left; font-size:0.9rem; }
+  .admin-table th{ font-family:var(--mono); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--teal); }
+  .row-actions a, .row-actions button{
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase;
+    margin-right:14px; background:none; border:none; cursor:pointer; color:var(--teal-deep); border-bottom:1px solid var(--brass);
+  }
+  .row-actions .danger{ color:var(--maroon); border-color:var(--maroon); }
+  .msg{ font-size:0.85rem; padding:10px 12px; border-radius:4px; margin-bottom:16px; display:none; }
+  .msg.show{ display:block; }
+  .msg.success{ background:var(--teal-deep); color:var(--ivory); }
+  .msg.error{ background:#F3E3E1; color:var(--maroon); }
+  .gate{ text-align:center; padding:80px 20px; }
+</style>
+</head>
+<body data-page="admin">
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <svg class="mark" viewBox="0 0 30 30"><path d="M15 3 L27 27 H3 Z" fill="#B98B33"/><rect x="10" y="16" width="10" height="11" fill="#0D3833"/></svg>
+      Marine & Metro Realty
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu">MENU</button>
+    <nav class="main-nav">
+      <a href="index.html" data-page="home">Home</a>
+      <a href="listings.html" data-page="listings">Listings</a>
+      <a href="about.html" data-page="about">About Us</a>
+      <a href="contact.html" data-page="contact">Enquire</a>
+    </nav>
+  </div>
+</header>
+
+<div class="ziggurat dark"></div>
+
+<div id="gate-check" class="gate" style="display:none;">
+  <h2>Owner access required</h2>
+  <p>Please <a href="login.html" style="color:var(--brass);border-bottom:1px solid var(--brass);">sign in as owner</a> to view this page.</p>
+</div>
+
+<div id="admin-content" style="display:none;">
+<section style="padding-top:44px;">
+  <div class="container">
+    <span class="eyebrow">Owner Panel</span>
+    <h1 style="font-size:1.9rem;margin-bottom:30px;">Manage Listings & Enquiries</h1>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-panel="panel-add">Add Property</button>
+      <button class="admin-tab" data-panel="panel-list">Manage Properties</button>
+      <button class="admin-tab" data-panel="panel-enquiries">Enquiries</button>
+    </div>
+
+    <!-- ADD / EDIT PROPERTY -->
+    <div class="admin-panel active" id="panel-add">
+      <div id="admin-msg" class="msg"></div>
+      <form id="property-form" class="form-card" style="max-width:none;">
+        <input type="hidden" id="pf-id">
+        <h3 id="form-heading">Add a New Property</h3>
+
+        <div class="grid-2">
+          <div class="form-row"><label for="pf-project">Project Name</label><input type="text" id="pf-project" required></div>
+          <div class="form-row"><label for="pf-type">Flat Type</label>
+            <select id="pf-type"><option value="2BHK">2BHK</option><option value="3BHK">3BHK</option></select>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="form-row"><label for="pf-area">Carpet Area (sq.ft.)</label><input type="number" id="pf-area" required></div>
+          <div class="form-row"><label for="pf-price">Price (₹, numeric)</label><input type="number" id="pf-price" required placeholder="e.g. 6500000"></div>
+          <div class="form-row"><label for="pf-pricelabel">Price Label</label><input type="text" id="pf-pricelabel" required placeholder="e.g. ₹65 Lakh"></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-row"><label for="pf-locality">Locality</label><input type="text" id="pf-locality" required placeholder="e.g. Powai"></div>
+          <div class="form-row"><label for="pf-location">Full Location</label><input type="text" id="pf-location" required placeholder="e.g. Powai, Mumbai"></div>
+        </div>
+
+        <div class="grid-3">
+          <div class="form-row"><label for="pf-floor">Floor</label><input type="text" id="pf-floor" placeholder="e.g. 7th of 14"></div>
+          <div class="form-row"><label for="pf-facing">Facing</label><input type="text" id="pf-facing" placeholder="e.g. East"></div>
+          <div class="form-row"><label for="pf-possession">Possession</label><input type="text" id="pf-possession" placeholder="e.g. Ready to Move"></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-row"><label for="pf-status">Legal Status</label>
+            <select id="pf-status">
+              <option>OC Received</option><option>CC Received</option>
+              <option>Under Construction</option><option>RERA Registered</option>
+            </select>
+          </div>
+          <div class="form-row"><label for="pf-rera">RERA Number</label><input type="text" id="pf-rera" placeholder="e.g. RERA Registered · P51800012345"></div>
+        </div>
+
+        <div class="form-row"><label for="pf-connectivity">Connectivity Notes</label><input type="text" id="pf-connectivity" placeholder="e.g. 8 min to Powai Lake"></div>
+        <div class="form-row"><label for="pf-amenities">Amenities (comma separated)</label><input type="text" id="pf-amenities" placeholder="Gymnasium, 24x7 Security, Clubhouse"></div>
+        <div class="form-row"><label for="pf-description">Description</label><textarea id="pf-description" placeholder="A few sentences about the property..."></textarea></div>
+
+        <div class="form-row">
+          <label for="pf-photos">Photos (first photo becomes the cover image)</label>
+          <input type="file" id="pf-photos" accept="image/*" multiple>
+          <div class="photo-preview" id="photo-preview"></div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:10px;">
+          <button type="submit" class="btn">Save Property</button>
+          <button type="button" class="btn outline" id="cancel-edit" style="display:none;color:var(--teal-deep);border-color:var(--teal-deep);">Cancel Edit</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- MANAGE / LIST -->
+    <div class="admin-panel" id="panel-list">
+      <table class="admin-table">
+        <thead><tr><th>Project</th><th>Type</th><th>Locality</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="admin-property-rows"></tbody>
+      </table>
+    </div>
+
+    <!-- ENQUIRIES -->
+    <div class="admin-panel" id="panel-enquiries">
+      <table class="admin-table">
+        <thead><tr><th>Date</th><th>Name</th><th>Phone</th><th>Email</th><th>Property</th><th>Message</th></tr></thead>
+        <tbody id="admin-enquiry-rows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">© 2026 Marine & Metro Realty — Academic Demonstration Project</div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="storage.js"></script>
+<script src="main.js"></script>
+<script>
+let currentPhotos = []; // base64 strings for the property currently being edited/added
+
+async function gateCheck(){
+  const session = await getSession();
+  if(!session || session.role !== "owner"){
+    document.getElementById("gate-check").style.display = "block";
+    return false;
+  }
+  document.getElementById("admin-content").style.display = "block";
+  return true;
+}
+
+function showAdminMsg(text, type){
+  const box = document.getElementById("admin-msg");
+  box.textContent = text;
+  box.className = "msg show " + type;
+}
+
+// ---- Tabs ----
+document.querySelectorAll(".admin-tab").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".admin-tab").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".admin-panel").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.panel).classList.add("active");
+    if(btn.dataset.panel === "panel-list") renderPropertyTable();
+    if(btn.dataset.panel === "panel-enquiries") renderEnquiryTable();
+  });
+});
+
+// ---- Image compression: resize + convert to base64 JPEG ----
+function fileToCompressedDataURL(file, maxWidth=900, quality=0.65){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const scale = Math.min(1, maxWidth / img.width);
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+document.getElementById("pf-photos").addEventListener("change", async (e)=>{
+  const files = Array.from(e.target.files).slice(0,4);
+  const preview = document.getElementById("photo-preview");
+  preview.innerHTML = "Processing images...";
+  const compressed = await Promise.all(files.map(f=>fileToCompressedDataURL(f)));
+  currentPhotos = currentPhotos.concat(compressed).slice(0,4);
+  renderPhotoPreview();
+});
+
+function renderPhotoPreview(){
+  const preview = document.getElementById("photo-preview");
+  preview.innerHTML = currentPhotos.map((src,i)=>
+    `<div style="position:relative;"><img src="${src}"><button type="button" onclick="removePhoto(${i})" style="position:absolute;top:-6px;right:-6px;background:var(--maroon);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:11px;cursor:pointer;">×</button></div>`
+  ).join("") || `<span style="font-size:0.8rem;color:var(--teal);">No photos added yet — a placeholder illustration will be used.</span>`;
+}
+function removePhoto(i){
+  currentPhotos.splice(i,1);
+  renderPhotoPreview();
+}
+
+// ---- Form: Add / Edit ----
+const form = document.getElementById("property-form");
+form.addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  const list = await getProperties();
+  const editingId = document.getElementById("pf-id").value;
+
+  const prop = {
+    id: editingId || nextPropertyId(list),
+    project: document.getElementById("pf-project").value.trim(),
+    type: document.getElementById("pf-type").value,
+    area: Number(document.getElementById("pf-area").value),
+    price: Number(document.getElementById("pf-price").value),
+    priceLabel: document.getElementById("pf-pricelabel").value.trim(),
+    locality: document.getElementById("pf-locality").value.trim(),
+    location: document.getElementById("pf-location").value.trim(),
+    city: "Mumbai",
+    floor: document.getElementById("pf-floor").value.trim(),
+    facing: document.getElementById("pf-facing").value.trim(),
+    possession: document.getElementById("pf-possession").value.trim(),
+    status: document.getElementById("pf-status").value,
+    rera: document.getElementById("pf-rera").value.trim(),
+    connectivity: document.getElementById("pf-connectivity").value.trim(),
+    amenities: document.getElementById("pf-amenities").value.split(",").map(s=>s.trim()).filter(Boolean),
+    description: document.getElementById("pf-description").value.trim(),
+    images: currentPhotos,
+    facade: (list.length % 2 === 0) ? "deco-1" : "deco-2"
+  };
+
+  await upsertProperty(prop);
+  showAdminMsg(editingId ? "Property updated." : "Property added.", "success");
+  resetForm();
+  renderPropertyTable();
+});
+
+document.getElementById("cancel-edit").addEventListener("click", resetForm);
+
+function resetForm(){
+  form.reset();
+  document.getElementById("pf-id").value = "";
+  document.getElementById("form-heading").textContent = "Add a New Property";
+  document.getElementById("cancel-edit").style.display = "none";
+  currentPhotos = [];
+  renderPhotoPreview();
+}
+
+async function editProperty(id){
+  const p = await getPropertyById(id);
+  if(!p) return;
+  document.getElementById("pf-id").value = p.id;
+  document.getElementById("pf-project").value = p.project;
+  document.getElementById("pf-type").value = p.type;
+  document.getElementById("pf-area").value = p.area;
+  document.getElementById("pf-price").value = p.price;
+  document.getElementById("pf-pricelabel").value = p.priceLabel;
+  document.getElementById("pf-locality").value = p.locality;
+  document.getElementById("pf-location").value = p.location;
+  document.getElementById("pf-floor").value = p.floor||"";
+  document.getElementById("pf-facing").value = p.facing||"";
+  document.getElementById("pf-possession").value = p.possession||"";
+  document.getElementById("pf-status").value = p.status;
+  document.getElementById("pf-rera").value = p.rera||"";
+  document.getElementById("pf-connectivity").value = p.connectivity||"";
+  document.getElementById("pf-amenities").value = (p.amenities||[]).join(", ");
+  document.getElementById("pf-description").value = p.description||"";
+  currentPhotos = p.images ? [...p.images] : [];
+  renderPhotoPreview();
+
+  document.getElementById("form-heading").textContent = "Edit Property — " + p.project;
+  document.getElementById("cancel-edit").style.display = "inline-block";
+  document.querySelectorAll(".admin-tab").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".admin-panel").forEach(p=>p.classList.remove("active"));
+  document.querySelector('[data-panel="panel-add"]').classList.add("active");
+  document.getElementById("panel-add").classList.add("active");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+async function removeProperty(id){
+  if(!confirm("Delete this property? This cannot be undone.")) return;
+  await deleteProperty(id);
+  renderPropertyTable();
+}
+
+async function renderPropertyTable(){
+  const list = await getProperties();
+  const rows = document.getElementById("admin-property-rows");
+  rows.innerHTML = list.map(p=>`
+    <tr>
+      <td>${p.project}</td>
+      <td>${p.type}</td>
+      <td>${p.locality}</td>
+      <td>${p.priceLabel}</td>
+      <td>${p.status}</td>
+      <td class="row-actions">
+        <a href="#" onclick="editProperty('${p.id}');return false;">Edit</a>
+        <button class="danger" onclick="removeProperty('${p.id}')">Delete</button>
+      </td>
+    </tr>`).join("") || `<tr><td colspan="6">No properties yet.</td></tr>`;
+}
+
+async function renderEnquiryTable(){
+  const list = await getEnquiries();
+  const rows = document.getElementById("admin-enquiry-rows");
+  rows.innerHTML = list.map(e=>`
+    <tr>
+      <td>${new Date(e.createdAt).toLocaleDateString("en-IN")}</td>
+      <td>${e.name}</td>
+      <td>${e.phone}</td>
+      <td>${e.email||"—"}</td>
+      <td>${e.propertyName||"General"}</td>
+      <td>${e.message}</td>
+    </tr>`).join("") || `<tr><td colspan="6">No enquiries yet.</td></tr>`;
+}
+
+(async ()=>{
+  const ok = await gateCheck();
+  if(ok) renderPropertyTable();
+})();
+</script>
+</body>
+</html>

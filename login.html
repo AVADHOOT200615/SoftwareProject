@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — Marine & Metro Realty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;600;700&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .tab-bar{ display:flex; gap:0; margin-bottom:28px; border-bottom:1px solid var(--line); }
+  .tab-btn{
+    flex:1; padding:14px; text-align:center; background:none; border:none; cursor:pointer;
+    font-family:var(--mono); font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--teal); border-bottom:3px solid transparent;
+  }
+  .tab-btn.active{ color:var(--teal-deep); border-color:var(--brass); font-weight:700; }
+  .panel{ display:none; }
+  .panel.active{ display:block; }
+  .switch-line{ text-align:center; font-size:0.85rem; color:var(--teal); margin-top:16px; }
+  .switch-line a{ color:var(--brass); border-bottom:1px solid var(--brass); }
+  .hint{
+    font-family:var(--mono); font-size:0.72rem; color:var(--teal); background:var(--stone-2);
+    padding:10px 12px; border-radius:4px; margin-bottom:20px; line-height:1.6;
+  }
+  .msg{ font-size:0.85rem; padding:10px 12px; border-radius:4px; margin-bottom:16px; display:none; }
+  .msg.show{ display:block; }
+  .msg.error{ background:#F3E3E1; color:var(--maroon); }
+  .msg.success{ background:var(--teal-deep); color:var(--ivory); }
+</style>
+</head>
+<body data-page="login">
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <svg class="mark" viewBox="0 0 30 30"><path d="M15 3 L27 27 H3 Z" fill="#B98B33"/><rect x="10" y="16" width="10" height="11" fill="#0D3833"/></svg>
+      Marine & Metro Realty
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu">MENU</button>
+    <nav class="main-nav">
+      <a href="index.html" data-page="home">Home</a>
+      <a href="listings.html" data-page="listings">Listings</a>
+      <a href="about.html" data-page="about">About Us</a>
+      <a href="contact.html" data-page="contact">Enquire</a>
+    </nav>
+  </div>
+</header>
+
+<div class="ziggurat dark"></div>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Account Access</span>
+      <h1 style="font-size:1.9rem;">Sign In</h1>
+    </div>
+
+    <div class="form-card" style="max-width:520px;">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="customer-login">Customer</button>
+        <button class="tab-btn" data-tab="owner-login">Owner</button>
+      </div>
+
+      <div id="msg-box" class="msg"></div>
+
+      <!-- CUSTOMER LOGIN -->
+      <div class="panel active" id="customer-login">
+        <form id="customer-login-form">
+          <div class="form-row">
+            <label for="cl-email">Email</label>
+            <input type="email" id="cl-email" required>
+          </div>
+          <div class="form-row">
+            <label for="cl-password">Password</label>
+            <input type="password" id="cl-password" required>
+          </div>
+          <button type="submit" class="btn" style="width:100%;">Sign In</button>
+        </form>
+        <p class="switch-line">New here? <a href="#" data-show="customer-register">Create an account</a></p>
+      </div>
+
+      <!-- CUSTOMER REGISTER -->
+      <div class="panel" id="customer-register">
+        <form id="customer-register-form">
+          <div class="form-row">
+            <label for="cr-name">Full Name</label>
+            <input type="text" id="cr-name" required>
+          </div>
+          <div class="form-row">
+            <label for="cr-email">Email</label>
+            <input type="email" id="cr-email" required>
+          </div>
+          <div class="form-row">
+            <label for="cr-phone">Phone</label>
+            <input type="tel" id="cr-phone" required>
+          </div>
+          <div class="form-row">
+            <label for="cr-password">Password</label>
+            <input type="password" id="cr-password" required minlength="4">
+          </div>
+          <button type="submit" class="btn" style="width:100%;">Create Account</button>
+        </form>
+        <p class="switch-line">Already have an account? <a href="#" data-show="customer-login">Sign in</a></p>
+      </div>
+
+      <!-- OWNER LOGIN -->
+      <div class="panel" id="owner-login">
+        <p class="hint">Demo credentials — username: <strong>owner</strong> · password: <strong>MarineMetro@2026</strong></p>
+        <form id="owner-login-form">
+          <div class="form-row">
+            <label for="ol-username">Username</label>
+            <input type="text" id="ol-username" required>
+          </div>
+          <div class="form-row">
+            <label for="ol-password">Password</label>
+            <input type="password" id="ol-password" required>
+          </div>
+          <button type="submit" class="btn" style="width:100%;">Sign In as Owner</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-bottom">© 2026 Marine & Metro Realty — Academic Demonstration Project</div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="storage.js"></script>
+<script src="main.js"></script>
+<script>
+  // ---- Tab + panel switching ----
+  document.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
+      hideMsg();
+    });
+  });
+  document.querySelectorAll("[data-show]").forEach(link=>{
+    link.addEventListener("click",(e)=>{
+      e.preventDefault();
+      document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+      document.getElementById(link.dataset.show).classList.add("active");
+      hideMsg();
+    });
+  });
+
+  function showMsg(text, type){
+    const box = document.getElementById("msg-box");
+    box.textContent = text;
+    box.className = "msg show " + type;
+  }
+  function hideMsg(){
+    document.getElementById("msg-box").className = "msg";
+  }
+
+  // ---- Customer register ----
+  document.getElementById("customer-register-form").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const name = document.getElementById("cr-name").value.trim();
+    const email = document.getElementById("cr-email").value.trim();
+    const phone = document.getElementById("cr-phone").value.trim();
+    const password = document.getElementById("cr-password").value;
+    const result = await registerUser({name, email, phone, password});
+    if(!result.ok){ showMsg(result.error, "error"); return; }
+    await setSession({role:"customer", name, email, phone});
+    window.location.href = "index.html";
+  });
+
+  // ---- Customer login ----
+  document.getElementById("customer-login-form").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const email = document.getElementById("cl-email").value.trim();
+    const password = document.getElementById("cl-password").value;
+    const user = await verifyUser(email, password);
+    if(!user){ showMsg("Incorrect email or password.", "error"); return; }
+    await setSession({role:"customer", name:user.name, email:user.email, phone:user.phone});
+    window.location.href = "index.html";
+  });
+
+  // ---- Owner login ----
+  document.getElementById("owner-login-form").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const username = document.getElementById("ol-username").value.trim();
+    const password = document.getElementById("ol-password").value;
+    if(username === OWNER_CREDENTIALS.username && password === OWNER_CREDENTIALS.password){
+      await setSession({role:"owner", name:"Owner"});
+      window.location.href = "admin.html";
+    } else {
+      showMsg("Incorrect owner username or password.", "error");
+    }
+  });
+</script>
+</body>
+</html>
