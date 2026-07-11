@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marine & Metro Realty — 2BHK & 3BHK Flats in Mumbai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;600;700&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="home">
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <svg class="mark" viewBox="0 0 30 30"><path d="M15 3 L27 27 H3 Z" fill="#B98B33"/><rect x="10" y="16" width="10" height="11" fill="#0D3833"/></svg>
+      Marine & Metro Realty
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu">MENU</button>
+    <nav class="main-nav">
+      <a href="index.html" data-page="home">Home</a>
+      <a href="listings.html" data-page="listings">Listings</a>
+      <a href="about.html" data-page="about">About Us</a>
+      <a href="contact.html" data-page="contact">Enquire</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="sunburst" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#B98B33" stroke-width="2" opacity="0.35">
+      <g transform="translate(600,140)">
+        <line x1="0" y1="0" x2="-500" y2="600"/>
+        <line x1="0" y1="0" x2="-380" y2="600"/>
+        <line x1="0" y1="0" x2="-250" y2="600"/>
+        <line x1="0" y1="0" x2="-120" y2="600"/>
+        <line x1="0" y1="0" x2="0" y2="600"/>
+        <line x1="0" y1="0" x2="120" y2="600"/>
+        <line x1="0" y1="0" x2="250" y2="600"/>
+        <line x1="0" y1="0" x2="380" y2="600"/>
+        <line x1="0" y1="0" x2="500" y2="600"/>
+      </g>
+    </g>
+  </svg>
+  <div class="container">
+    <span class="eyebrow">Powai · Andheri · Thane · Borivali · Mulund</span>
+    <h1>Every 2BHK and 3BHK worth seeing, in one place — not one phone call at a time.</h1>
+    <p class="lede">Compare carpet area, price, and amenities across Mumbai's listings yourself, then bring in an agent only when you're ready to visit.</p>
+
+    <div class="search-arch">
+      <div class="arch-frame">
+        <form class="search-form" id="hero-search-form">
+          <select id="hero-type" aria-label="Flat type">
+            <option value="">Any Flat Type</option>
+            <option value="2BHK">2BHK</option>
+            <option value="3BHK">3BHK</option>
+          </select>
+          <input type="text" id="hero-locality" placeholder="Locality — e.g. Powai, Andheri" aria-label="Locality">
+          <button type="submit" class="btn">Search Listings</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="ziggurat"></div>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Featured This Week</span>
+      <h2>Recently added listings</h2>
+      <p>A running sample of what's currently available across our partner projects.</p>
+    </div>
+    <div class="card-grid" id="featured-grid"></div>
+    <div style="text-align:center;margin-top:36px;">
+      <a href="listings.html" class="btn small" style="background:var(--teal-deep);color:var(--ivory);border-color:var(--teal-deep);">View All Listings</a>
+    </div>
+  </div>
+</section>
+
+<div class="ziggurat on-stone"></div>
+
+<section style="background:var(--stone-2);">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Why This Exists</span>
+      <h2>One page, instead of three phone calls</h2>
+      <p>Property details in Mumbai are usually shared verbally, project by project, call by call. This site puts carpet area, price, location, and legal status (RERA/CC/OC) in front of you directly — you decide which two or three are worth a site visit.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Marine & Metro Realty</h4>
+        <p>A self-service listing platform for 2BHK and 3BHK homes across Mumbai. Built to reduce repeat calls, not replace your agent.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="listings.html">All Listings</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Submit Enquiry</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Reach Us</h4>
+        <ul>
+          <li>Mumbai, Maharashtra</li>
+          <li>enquiries@marinemetro.example</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Marine & Metro Realty — Academic Demonstration Project</div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

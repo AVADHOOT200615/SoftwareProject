@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit an Enquiry — Marine & Metro Realty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;600;700&family=Karla:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="contact">
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <svg class="mark" viewBox="0 0 30 30"><path d="M15 3 L27 27 H3 Z" fill="#B98B33"/><rect x="10" y="16" width="10" height="11" fill="#0D3833"/></svg>
+      Marine & Metro Realty
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu">MENU</button>
+    <nav class="main-nav">
+      <a href="index.html" data-page="home">Home</a>
+      <a href="listings.html" data-page="listings">Listings</a>
+      <a href="about.html" data-page="about">About Us</a>
+      <a href="contact.html" data-page="contact">Enquire</a>
+    </nav>
+  </div>
+</header>
+
+<div class="ziggurat dark"></div>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Get In Touch</span>
+      <h1 style="font-size:1.9rem;">Submit an Enquiry</h1>
+      <p>Tell us what you're looking for, or ask about a specific project. Our team will call you back — no need to chase.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="success-banner" id="success-banner"></div>
+      <p id="prefill-note" style="display:none;font-family:var(--mono);font-size:0.8rem;background:var(--stone-2);padding:12px 14px;border-radius:4px;margin-bottom:20px;"></p>
+
+      <form id="enquiry-form" novalidate>
+        <input type="hidden" id="field-property">
+
+        <div class="form-row" id="row-name">
+          <label for="field-name">Full Name</label>
+          <input type="text" id="field-name" placeholder="e.g. Priya Sharma">
+          <span class="error-msg">Please enter your full name.</span>
+        </div>
+
+        <div class="form-row" id="row-phone">
+          <label for="field-phone">Phone Number</label>
+          <input type="tel" id="field-phone" placeholder="10-digit mobile number">
+          <span class="error-msg">Please enter a valid 10-digit phone number.</span>
+        </div>
+
+        <div class="form-row" id="row-email">
+          <label for="field-email">Email (optional)</label>
+          <input type="email" id="field-email" placeholder="you@example.com">
+          <span class="error-msg">Please enter a valid email address.</span>
+        </div>
+
+        <div class="form-row" id="row-message">
+          <label for="field-message">Message</label>
+          <textarea id="field-message" placeholder="Tell us what you're looking for — flat type, budget, locality..."></textarea>
+          <span class="error-msg">Please add a short message so we know how to help.</span>
+        </div>
+
+        <button type="submit" class="btn" style="width:100%;">Submit Enquiry</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Marine & Metro Realty</h4>
+        <p>A self-service listing platform for 2BHK and 3BHK homes across Mumbai.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="listings.html">All Listings</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Submit Enquiry</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Reach Us</h4>
+        <ul>
+          <li>Mumbai, Maharashtra</li>
+          <li>enquiries@marinemetro.example</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Marine & Metro Realty — Academic Demonstration Project</div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
